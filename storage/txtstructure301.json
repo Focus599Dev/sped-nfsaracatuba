@@ -6,4 +6,4 @@
     "D" : "D|CpfCnpj|RgIe|NomeRazao|NomeFantasia|Municipio|Bairro|Cep|Prefixo|Logradouro|Complemento|Numero|Email|DentroPais|",
     "E" : "E|MatDescricao|MatValorUnit|MatQuantidade|MatNota|MatCpfCnpj|DeduMateriais|",
     "F" : "F|Pis|RetPis|Cofins|RetCofins|Inss|RetInss|Ir|RetIr|Csll|RetCsll|Icms|RetIcms|Ipi|RetIpi|Iof|RetIof|Cide|RetCide|OutrosTributos|RetOutrosTributos|OutrasRetencoes|RetOutrasRetencoes|"
-}
+} 

@@ -11,6 +11,5 @@ namespace NFePHP\NFSe\Aracatuba\Exception;
  * @link       https://github.com/Focus599Dev/sped-nfsginfe for the canonical source repository
  */
 
-interface ExceptionInterface
-{
+interface ExceptionInterface{
 }

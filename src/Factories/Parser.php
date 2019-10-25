@@ -140,6 +140,5 @@ class Parser {
         }
 
         return $std;
-
     }
 }

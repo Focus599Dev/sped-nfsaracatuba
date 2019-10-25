@@ -89,7 +89,7 @@ class Convert {
      * @return boolean
     */
     protected function isNFSe($txt){
-        
+
         if (empty($txt)) {
             throw DocumentsException::wrongDocument(15, '');
         }
@@ -218,6 +218,4 @@ class Convert {
 
     }
 
-}                                                                                                                            
-
-?>
+}

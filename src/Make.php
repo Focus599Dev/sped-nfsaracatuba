@@ -254,7 +254,7 @@ class Make{
                </nfse:Nfse.Execute>
             </soapenv:Body>
         </soapenv:Envelope>';
-        echo $envelope;
+
         return $envelope;
     }
 }
