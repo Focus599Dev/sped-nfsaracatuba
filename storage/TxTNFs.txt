@@ -1,0 +1,12 @@
+//Info de identificação
+A|MesCompetencia|AnoCompetencia|Senha|
+//Info da nota
+B|Lote|Sequencia|DataEmissao|HoraEmissao|Situacao|Retido|Atividade|AliquotaAplicada|Deducao|Imposto|Retencao|Observacao|DataVencimento|ContraApresentacao|Obra|
+//Info do serviço
+C|Descricao|ValorUnit|Quantidade|Desconto|AliquotaTributos|Local|UfFora|MunicipioFora|PaisFora|
+//Info do tomador de serviço
+D|CpfCnpj|RgIe|NomeRazao|NomeFantasia|Municipio|Bairro|Cep|Prefixo|Logradouro|Complemento|Numero|Email|DentroPais|
+//Info de Material
+E|MatDescricao|MatValorUnit|MatQuantidade|MatNota|MatCpfCnpj|DeduMateriais|
+//Impostos
+F|Pis|RetPis|Cofins|RetCofins|Inss|RetInss|Ir|RetIr|Csll|RetCsll|Icms|RetIcms|Ipi|RetIpi|Iof|RetIof|Cide|RetCide|OutrosTributos|RetOutrosTributos|OutrasRetencoes|RetOutrasRetencoes|

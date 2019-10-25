@@ -1,0 +1,9 @@
+{
+    "NOTAFISCAL":"NOTAFISCAL|1|",
+    "A" : "A|MesCompetencia|AnoCompetencia|Senha|",
+    "B" : "B|Lote|Sequencia|DataEmissao|HoraEmissao|Situacao|Retido|Atividade|AliquotaAplicada|Deducao|Imposto|Retencao|Observacao|DataVencimento|ContraApresentacao|Obra|",
+    "C" : "C|Descricao|ValorUnit|Quantidade|Desconto|AliquotaTributos|Local|UfFora|MunicipioFora|PaisFora|",
+    "D" : "D|CpfCnpj|RgIe|NomeRazao|NomeFantasia|Municipio|Bairro|Cep|Prefixo|Logradouro|Complemento|Numero|Email|DentroPais|",
+    "E" : "E|MatDescricao|MatValorUnit|MatQuantidade|MatNota|MatCpfCnpj|DeduMateriais|",
+    "F" : "F|Pis|RetPis|Cofins|RetCofins|Inss|RetInss|Ir|RetIr|Csll|RetCsll|Icms|RetIcms|Ipi|RetIpi|Iof|RetIof|Cide|RetCide|OutrosTributos|RetOutrosTributos|OutrasRetencoes|RetOutrasRetencoes|"
+}
