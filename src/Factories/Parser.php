@@ -48,7 +48,7 @@ class Parser {
      * @param string $version
     */
     public function __construct($version = '3.0.1'){
-        
+
         $ver = str_replace('.', '', $version);
 
         $path = realpath(__DIR__ . "/../../storage/txtstructure$ver.json");
@@ -66,13 +66,12 @@ class Parser {
      * @return string|null
      */
     public function toXml($nota) {
-       
-        $this->array2xml($nota);
 
-        if ($this->make->monta()) {
+        $std = $this->array2xml($nota);
 
-            return $this->make->getXML();
+        if ($this->make->gerarNota($std)) {
 
+            return $this->make->getXML($std);
         }
 
         return null;
@@ -85,42 +84,28 @@ class Parser {
     */
     protected function array2xml($nota){
 
+        $obj = [];
+
         foreach ($nota as $lin) {
-            
+
             $fields = explode('|', $lin);
-
-            if (empty($fields)) {
-                continue;
-            }
-
-            $metodo = strtolower(str_replace(' ', '', $fields[0])).'Entity';
-
-            if (!method_exists(__CLASS__, $metodo)) {
-                //campo não definido
-                throw DocumentsException::wrongDocument(16, $lin);
-            }
 
             $struct = $this->structure[strtoupper($fields[0])];
 
             $std = $this->fieldsToStd($fields, $struct);
 
-            $this->$metodo($std);
+            $obj = (object) array_merge((array) $obj, (array) $std);
         }
+
+        return $obj;
     }
 
-    /**
-     * Creates stdClass for all tag fields
-     * @param array $dfls
-     * @param string $struct
-     * @return stdClass
-    */
-   
     protected static function fieldsToStd($dfls, $struct) {
         
         $sfls = explode('|', $struct);
-        
+
         $len = count($sfls)-1;
-        
+
         $std = new \stdClass();
 
         for ($i = 1; $i < $len; $i++) {
@@ -136,7 +121,6 @@ class Parser {
 
                 $std->$name = Strings::replaceSpecialsChars($data);
             }
-
         }
 
         return $std;

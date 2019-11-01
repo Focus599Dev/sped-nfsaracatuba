@@ -38,9 +38,7 @@ class Convert {
         if (!empty($txt)) {
 
             $this->txt = trim($txt);
-
         }
-
     }
 
     /**
@@ -54,10 +52,11 @@ class Convert {
         if (!empty($txt)) {
             $this->txt = trim($txt);
         }
-        
+
         $txt = Strings::removeSomeAlienCharsfromTxt($this->txt);
 
         if (!$this->isNFSe($txt)) {
+            
             throw DocumentsException::wrongDocument(12, '');
         }
 
@@ -74,7 +73,7 @@ class Convert {
             $version = $this->layouts[$i];
 
             $parser = new Parser($version);
-            
+
             $this->xmls[] = $parser->toXml($nota);
 
             $i++;
@@ -95,13 +94,13 @@ class Convert {
         }
 
         $this->dados = explode("\n", $txt);
-        
+
         $fields = explode('|', $this->dados[0]); 
-        
+
         if ($fields[0] == 'NOTAFISCAL') {
             
             $this->numNFs = (int) $fields[1];
-            
+
             return true;
         }
 
@@ -109,7 +108,7 @@ class Convert {
     }
 
     /**
-     * Separate nfse into elements of an array
+     * Se tiver mais de uma nota cria um array de notas, se não retorna o array com a unica nota
      * @param  array $array
      * @return array
      */
@@ -145,7 +144,6 @@ class Convert {
                 }
 
                 $xCount += 1;
-
             }
 
             $iCount += 1;
@@ -158,11 +156,9 @@ class Convert {
             $length = $marc['fim']-$marc['init'];
 
             $aNotas[] = array_slice($array, $marc['init'], $length, false);
-
         }
 
         return $aNotas;
-
     }
 
      /**
@@ -176,7 +172,6 @@ class Convert {
         if ($num != $this->numNFs) {
 
             throw DocumentsException::wrongDocument(13, '');
-
         }
     }
 
@@ -188,7 +183,6 @@ class Convert {
         foreach ($this->notas as $nota) {
 
             $this->loadLayouts($nota);
-
         }
     }
 
@@ -211,11 +205,7 @@ class Convert {
                 $this->layouts[] = $fields[2];
 
                 break;
-
             }
-
         }
-
     }
-
 }

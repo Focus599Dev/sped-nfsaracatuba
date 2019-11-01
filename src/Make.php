@@ -1,4 +1,5 @@
 <?php
+
 namespace NFePHP\NFSe\Aracatuba;
 
 use NFePHP\Common\DOMImproved as Dom;
@@ -30,8 +31,18 @@ class Make{
 
         $this->dom->formatOutput = false;
     }
+    
+    public function getXML($std) {
 
-    public function gerarNota(){
+        if (empty($this->xml)) {
+
+            $this->gerarNota($std);
+        }
+
+        return $this->xml;
+    }
+
+    public function gerarNota($std) {
 
         $method = '1';
 
@@ -41,17 +52,37 @@ class Make{
         $identificacao = $this->dom->createElement('IDENTIFICACAO');
         $root->appendChild($identificacao);
 
-        $mesComp = $this->dom->createElement('MESCOMP', '1');
-        $identificacao->appendChild($mesComp);
+        $this->dom->addChild(
+            $identificacao,                 // pai    
+            "MESCOMP",                      //nome
+            $std->MesCompetencia,           // valor
+            true,                           //se é obrigatorio
+            "Mes de competencia, 2 digitos" // descrição se der catch
+        );
 
-        $anoComp = $this->dom->createElement('ANOCOMP', '1');
-        $identificacao->appendChild($anoComp);
+        $this->dom->addChild(
+            $identificacao,
+            "ANOCOMP",
+            $std->AnoCompetencia,
+            true,
+            "Ano de competencia, 4 digitos"
+        );
 
-        $inscricao = $this->dom->createElement('INSCRICAO', $this->inscricaoUser);
-        $identificacao->appendChild($inscricao);
+        $this->dom->addChild(
+            $identificacao,
+            "INSCRICAO",
+            $this->inscricaoUser,
+            true,
+            "Mes de competencia, até 9 digitos"
+        );
 
-        $versao = $this->dom->createElement('VERSAO', $this->versaoNFSE);
-        $identificacao->appendChild($versao);
+        $this->dom->addChild(
+            $identificacao,
+            "VERSAO",
+            $this->versaoNFSE,
+            true,
+            "Mes de competencia"
+        );
 
         $notas = $this->dom->createElement('NOTAS');
         $root->appendChild($notas);
@@ -59,92 +90,453 @@ class Make{
         $nota = $this->dom->createElement('NOTA');
         $notas->appendChild($nota);
 
-        $lote = $this->dom->createElement('LOTE', '1');
-        $nota->appendChild($lote);
+        $this->dom->addChild(
+            $nota,
+            "RPS",
+            $std->RPSNum,
+            true,
+            "Número do Recibo Provisório de Serviços, até 14 caracteres"
+        );
 
-        $sequencia = $this->dom->createElement('SEQUENCIA', '1');
-        $nota->appendChild($sequencia);
+        $this->dom->addChild(
+            $nota,
+            "LOTE",
+            $std->NumeroLote,
+            true,
+            "lote da nfs-e, até 9 caracteres"
+        );
 
-        $dataEmissao = $this->dom->createElement('DATAEMISSAO', '1');
-        $nota->appendChild($dataEmissao);
+        $this->dom->addChild(
+            $nota,
+            "SEQUENCIA",
+            $std->Sequencia,
+            true,
+            "sequência da NFS-e, até 9 caracteres"
+        );
 
-        $horaEmissao = $this->dom->createElement('HORAEMISSAO', '1');
-        $nota->appendChild($horaEmissao);
+        $this->dom->addChild(
+            $nota,
+            "DATAEMISSAO",
+            $std->DataEmissao,
+            true,
+            "data da NFS-e, e aceita apenas números e o separador para o formato Data"
+        );
 
-        $local = $this->dom->createElement('LOCAL', '1');
-        $nota->appendChild($local);
+        $this->dom->addChild(
+            $nota,
+            "HORAEMISSAO",
+            $std->HoraEmissao,
+            true,
+            "hora da NFS-e, e aceita apenas números e o separador para o formato hora"
+        );
 
-        $ufFora = $this->dom->createElement('UFFORA', '1');
-        $nota->appendChild($ufFora);
+        $this->dom->addChild(
+            $nota,
+            "LOCAL",
+            $std->Local,
+            true,
+            "local em que o serviço foi prestado"
+        );
 
-        $municipioFora = $this->dom->createElement('MUNICIPIOFORA', '1');
-        $nota->appendChild($municipioFora);
+        $this->dom->addChild(
+            $nota,
+            "UFFORA",
+            $std->UfFora,
+            false,
+            "sigla da Unidade Federativa em que o serviço foi prestado"
+        );
 
-        $paisFora = $this->dom->createElement('PAISFORA', '1');
-        $nota->appendChild($paisFora);
+        $this->dom->addChild(
+            $nota,
+            "MUNICIPIOFORA",
+            $std->MunicipioFora,
+            false,
+            "código do município em que o serviço foi prestado"
+        );
 
-        $situacao = $this->dom->createElement('SITUACAO', '1');
-        $nota->appendChild($situacao);
+        $this->dom->addChild(
+            $nota,
+            "PAISFORA",
+            $std->PaisFora,
+            false,
+            "país em que o serviço foi prestado"
+        );
 
-        $retido = $this->dom->createElement('RETIDO', '1');
-        $nota->appendChild($retido);
+        $this->dom->addChild(
+            $nota,
+            "SITUACAO",
+            $std->Situacao,
+            true,
+            "código da situação da NFS-e, e aceita números inteiros de até 4 caracteres"
+        );
 
-        $atividade = $this->dom->createElement('ATIVIDADE', '1');
-        $nota->appendChild($atividade);
+        $this->dom->addChild(
+            $nota,
+            "RETIDO",
+            $std->IssRetido,
+            true,
+            "identificação se o imposto será ou não"
+        );
 
-        $aliquotaAplicada = $this->dom->createElement('ALIQUOTAAPLICADA', '1');
-        $nota->appendChild($aliquotaAplicada);
+        $this->dom->addChild(
+            $nota,
+            "ATIVIDADE",
+            $std->CodigoCnae,
+            true,
+            "código da atividade da NFS-e, e aceita até 10 caracteres alfanuméricos"
+        );
 
-        $deducao = $this->dom->createElement('DEDUCAO', '1');
-        $nota->appendChild($deducao);
+        $this->dom->addChild(
+            $nota,
+            "ALIQUOTAAPLICADA",
+            $std->Aliquota,
+            true,
+            "alíquota da NFS-e, e aceita apenas valores no formato Decimal"
+        );
 
-        $imposto = $this->dom->createElement('IMPOSTO', '1');
-        $nota->appendChild($imposto);
+        $this->dom->addChild(
+            $nota,
+            "DEDUCAO",
+            $std->Deducao,
+            true,
+            "dedução da NFS-e, e aceita apenas valores no formato Decimal"
+        );
 
-        $retencao = $this->dom->createElement('RETENCAO', '1');
-        $nota->appendChild($retencao);
+        $this->dom->addChild(
+            $nota,
+            "IMPOSTO",
+            $std->Imposto,
+            true,
+            "imposto da NFS-e, e aceita apenas valores no formato Decimal"
+        );
 
-        $observacao = $this->dom->createElement('OBSERVACAO', '1');
-        $nota->appendChild($observacao);
+        $this->dom->addChild(
+            $nota,
+            "RETENCAO",
+            $std->ValorIssRetido,
+            true,
+            "valor da retenção"
+        );
 
-        $cpfCnpj = $this->dom->createElement('CPFCNPJ', '1');
-        $nota->appendChild($cpfCnpj);
+        $this->dom->addChild(
+            $nota,
+            "OBSERVACAO",
+            $std->Observacao,
+            false,
+            "observações sobre a NFS-e"
+        );
 
-        $nomeRazao = $this->dom->createElement('NOMERAZAO', '1');
-        $nota->appendChild($nomeRazao);
+        $this->dom->addChild(
+            $nota,
+            "CPFCNPJ",
+            $std->CpfCnpj,
+            true,
+            "CPF ou CNPJ do tomador da NFS-e, e aceita até 20 caracteres alfanuméricos"
+        );
 
-        $nomeFantasia = $this->dom->createElement('NOMEFANTASIA', '1');
-        $nota->appendChild($nomeFantasia);
+        $this->dom->addChild(
+            $nota,
+            "RGIE",
+            $std->RgIe,
+            false,
+            "RG ou IE do tomador da NFS-e, e aceita até 15 caracteres"
+        );
 
-        $municipio = $this->dom->createElement('MUNICIPIO', '1');
-        $nota->appendChild($municipio);
+        $this->dom->addChild(
+            $nota,
+            "NOMERAZAO",
+            $std->RazaoSocial,
+            true,
+            "Razão social do tomador da NFS-e"
+        );
 
-        $bairro = $this->dom->createElement('BAIRRO', '1');
-        $nota->appendChild($bairro);
+        $this->dom->addChild(
+            $nota,
+            "NOMEFANTASIA",
+            $std->NomeFantasia,
+            true,
+            "nome fantasia do tomador da NFS-e"
+        );
 
-        $cep = $this->dom->createElement('CEP', '1');
-        $nota->appendChild($cep);
+        $this->dom->addChild(
+            $nota,
+            "MUNICIPIO",
+            $std->CodigoMunicipio,
+            true,
+            "código do município da empresa do tomador"
+        );
 
-        $prefixo = $this->dom->createElement('PREFIXO', '1');
-        $nota->appendChild($prefixo);
+        $this->dom->addChild(
+            $nota,
+            "BAIRRO",
+            $std->Bairro,
+            true,
+            "descrição do bairro do tomador"
+        );
 
-        $logradouro = $this->dom->createElement('LOGRADOURO', '1');
-        $nota->appendChild($logradouro);
+        $this->dom->addChild(
+            $nota,
+            "CEP",
+            $std->Cep,
+            true,
+            "CEP  da  empresa  do  tomador"
+        );
 
-        $complemento = $this->dom->createElement('COMPLEMENTO', '1');
-        $nota->appendChild($complemento);
+        $this->dom->addChild(
+            $nota,
+            "PREFIXO",
+            $std->Prefixo,
+            true,
+            "descrição resumida do prefixo do logradouro do tomador"
+        );
 
-        $numero = $this->dom->createElement('NUMERO', '1');
-        $nota->appendChild($numero);
+        $this->dom->addChild(
+            $nota,
+            "LOGRADOURO",
+            $std->Logradouro,
+            true,
+            "descrição do logradouro do tomador da NFS-e"
+        );
 
-        $dentroPais = $this->dom->createElement('DENTROPAIS', '1');
-        $nota->appendChild($dentroPais);
+        $this->dom->addChild(
+            $nota,
+            "COMPLEMENTO",
+            $std->Complemento,
+            true,
+            "complemento  do  endereço"
+        );
 
-        $dedMateriais = $this->dom->createElement('DEDMATERIAIS', '1');
-        $nota->appendChild($dedMateriais);
+        $this->dom->addChild(
+            $nota,
+            "NUMERO",
+            $std->Numero,
+            true,
+            "número da empresa do tomador"
+        );
 
-        $dataVencimento = $this->dom->createElement('DATAVENCIMENTO', '1');
-        $nota->appendChild($dataVencimento);
+        $this->dom->addChild(
+            $nota,
+            "EMAIL",
+            $std->Email,
+            true,
+            "email da empresa do tomador"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "DENTROPAIS",
+            $std->DentroPais,
+            false,
+            "indica se o tomador é de dentro"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "DEDMATERIAIS",
+            $std->DeduMateriais,
+            false,
+            "se houve ou não dedução de materiais"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "DATAVENCIMENTO",
+            $std->DataVencimento,
+            false,
+            "data para pagamento do serviço"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "CONTRAAPRESENTACAO",
+            $std->ContraApresentacao,
+            false,
+            "Contra Apresentação com relação à Data de Vencimento da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "PIS",
+            $std->ValorPis,
+            true,
+            "valor do Programa de Integração Social(PIS)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETPIS",
+            $std->RetPis,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "COFINS",
+            $std->ValorCofins,
+            true,
+            "valor da Contribuição para o Financiamento da Seguridade Social(COFINS)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETCOFINS",
+            $std->RetCofins,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "INSS",
+            $std->ValorInss,
+            true,
+            "valor do Instituto Nacional do Seguro Social(INSS)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETINSS",
+            $std->RetInss,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "IR",
+            $std->ValorIr,
+            true,
+            "valor do Imposto de Renda(IR)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETIR",
+            $std->RetIr,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "CSLL",
+            $std->ValorCsll,
+            true,
+            "valor da Contribuição Social sobreo Lucro Líquido (CSLL)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETCSLL",
+            $std->RetCsll,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "ICMS",
+            $std->Icms,
+            true,
+            "valor do Imposto sobre Circulação de Mercadorias e Serviços(ICMS)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETICMS",
+            $std->RetIcms,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "IPI",
+            $std->Ipi,
+            true,
+            "valor do Imposto Sobre Produtos Industrializados(IPI)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETIPI",
+            $std->RetIpi,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "IOF",
+            $std->Iof,
+            true,
+            "valor do Imposto sobre operações financeiras(IOF)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETIOF",
+            $std->RetIof,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "CIDE",
+            $std->Cide,
+            true,
+            "valor das Contribuições de Intervenção no Domínio Econômico(CIDE)"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETCIDE",
+            $std->RetCide,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "OUTROSTRIBUTOS",
+            $std->OutrosTributos,
+            true,
+            "valor de Outros Tributos"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETOUTROSTRIBUTOS",
+            $std->RetOutrosTributos,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "OUTRASRETENCOES",
+            $std->OutrasRetencoes,
+            true,
+            "valor de Outros Impostos"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "RETOUTRASRETENCOES",
+            $std->RetOutrasRetencoes,
+            false,
+            "informar se será deduzido do valor liquido da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $nota,
+            "OBRA",
+            $std->Obra,
+            true,
+            "código da obra"
+        );
 
         $servicos = $this->dom->createElement('SERVICOS');
         $nota->appendChild($servicos);
@@ -152,17 +544,86 @@ class Make{
         $servico = $this->dom->createElement('SERVICO');
         $servicos->appendChild($servico);
 
-        $descricao = $this->dom->createElement('DESCRICAO', '1');
-        $servico->appendChild($descricao);
+        $this->dom->addChild(
+            $servico,
+            "DESCRICAO",
+            $std->Descricao,
+            true,
+            "descrição do serviço da NFS-e"
+        );
 
-        $valorUnit = $this->dom->createElement('VALORUNIT', '1');
-        $servico->appendChild($valorUnit);
+        $this->dom->addChild(
+            $servico,
+            "QUANTIDADE",
+            $std->Quantidade,
+            true,
+            "quantidade do serviço"
+        );
 
-        $quantidade = $this->dom->createElement('QUANTIDADE', '1');
-        $servico->appendChild($quantidade);
+        $this->dom->addChild(
+            $servico,
+            "DESCONTO",
+            $std->Desconto,
+            true,
+            "valor do desconto de um serviço"
+        );
+
+        $this->dom->addChild(
+            $servico,
+            "ALIQUOTATRIBUTOS",
+            $std->AliquotaAtributos,
+            false,
+            "alíquota do tributo aproximado do serviço"
+        );
+
+        $materiais = $this->dom->createElement('MATERIAIS');
+        $nota->appendChild($materiais);
+
+        $material = $this->dom->createElement('MATERIAL');
+        $materiais->appendChild($material);
+
+        $this->dom->addChild(
+            $material,
+            "MATDESCRICAO",
+            $std->MatDescricao,
+            true,
+            "descrição do material"
+        );
+
+        $this->dom->addChild(
+            $material,
+            "MATVALORUNIT",
+            $std->MatValorUnit,
+            true,
+            "valor unitário do material"
+        );
+
+        $this->dom->addChild(
+            $material,
+            "MATQUANTIDADE",
+            $std->MatQuantidade,
+            true,
+            "quantidade do material"
+        );
+
+        $this->dom->addChild(
+            $material,
+            "MATNOTA",
+            $std->MatNota,
+            true,
+            "número da nota do fornecedor do material"
+        );
+
+        $this->dom->addChild(
+            $material,
+            "MATCPFCNPJ",
+            $std->MatCpfCnpj,
+            true,
+            "CPF/CNPJ do fornecedor do material"
+        );
 
         $this->xml = $this->dom->saveXML();
-        
+
         return $this->envelopXML($this->xml, $method);
     }
 
@@ -242,19 +703,19 @@ class Make{
         
         $xml = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
 
-        $envelope =
+        $this->xml =
         '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">
             <soapenv:Header/>
             <soapenv:Body>
-               <nfse:Nfse.Execute>
-                  <nfse:Operacao>' . $method . '</nfse:Operacao>
-                  <nfse:Usuario>' . $this->user . '</nfse:Usuario>
-                  <nfse:Senha>' . md5($this->password) . '</nfse:Senha>
-                  <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
-               </nfse:Nfse.Execute>
+                <nfse:Nfse.Execute>
+                    <nfse:Operacao>' . $method . '</nfse:Operacao>
+                    <nfse:Usuario>' . $this->user . '</nfse:Usuario>
+                    <nfse:Senha>' . md5($this->password) . '</nfse:Senha>
+                    <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
+                </nfse:Nfse.Execute>
             </soapenv:Body>
         </soapenv:Envelope>';
 
-        return $envelope;
+        return $this->xml;
     }
 }

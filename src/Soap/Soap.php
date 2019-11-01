@@ -12,12 +12,10 @@ class Soap{
 
         $xml = $obj->gerarNota();
 
-        $soapUrl = "http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse?wsdl";
-
-        $this->curl($xml, $soapUrl);
+        $this->send($xml, $soapUrl);
     }
 
-    public function curl($xml, $soapUrl){
+    public function send($xml, $soapUrl){
 
         $ch = curl_init();
 
@@ -34,8 +32,9 @@ class Soap{
         curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         $response = curl_exec($ch);
-
-        curl_close($ch);
         echo $response;
+        curl_close($ch);
+
+        return $response;
     }
 }
