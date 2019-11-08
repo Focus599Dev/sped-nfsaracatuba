@@ -69,7 +69,7 @@ class Parser {
 
         $std = $this->array2xml($nota);
 
-        if ($this->make->gerarNota($std)) {
+        if ($this->make->getXML($std)) {
 
             return $this->make->getXML($std);
         }

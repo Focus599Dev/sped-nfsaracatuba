@@ -15,10 +15,6 @@ class Make{
 
     public $xml;
 
-    public $user = '02949160000379';
-
-    public $password = '123456';
-
     public $inscricaoUser = '50778';
 
     public $versaoNFSE = '1.00';
@@ -54,9 +50,9 @@ class Make{
 
         $this->dom->addChild(
             $identificacao,                 // pai    
-            "MESCOMP",                      //nome
+            "MESCOMP",                      // nome
             $std->MesCompetencia,           // valor
-            true,                           //se é obrigatorio
+            true,                           // se é obrigatorio
             "Mes de competencia, 2 digitos" // descrição se der catch
         );
 
@@ -73,7 +69,7 @@ class Make{
             "INSCRICAO",
             $this->inscricaoUser,
             true,
-            "Mes de competencia, até 9 digitos"
+            "Inscrição mobiliária do prestador da NFS-e"
         );
 
         $this->dom->addChild(
@@ -81,7 +77,7 @@ class Make{
             "VERSAO",
             $this->versaoNFSE,
             true,
-            "Mes de competencia"
+            "Versão do leiaute do arquivo"
         );
 
         $notas = $this->dom->createElement('NOTAS');
@@ -624,10 +620,10 @@ class Make{
 
         $this->xml = $this->dom->saveXML();
 
-        return $this->envelopXML($this->xml, $method);
+        return $this->xml;
     }
 
-    public function cancelamento(){
+    public function cancelamento($std){
         
         $method = '2';
 
@@ -637,24 +633,44 @@ class Make{
         $identificacao = $this->dom->createElement('IDENTIFICACAO');
         $root->appendChild($identificacao);
 
-        $inscricao = $this->dom->createElement('INSCRICAO', $this->inscricaoUser);
-        $identificacao->appendChild($inscricao);
+        $this->dom->addChild(
+            $identificacao,
+            "INSCRICAO",
+            $this->inscricaoUser,
+            true,
+            "Inscrição mobiliária do prestador da NFS-e"
+        );
 
-        $lote = $this->dom->createElement('LOTE', '1');
-        $identificacao->appendChild($lote);
+        $this->dom->addChild(
+            $identificacao,
+            "LOTE",
+            $std->NumeroLote,
+            true,
+            "Lote da NFS-e, numeros inteiros de até 9"
+        );
 
-        $sequencia = $this->dom->createElement('SEQUENCIA', '1');
-        $identificacao->appendChild($sequencia);
+        $this->dom->addChild(
+            $identificacao,
+            "SEQUENCIA",
+            $std->Sequencia,
+            true,
+            "Sequência da NFS-e, numeros inteiros de até 9"
+        );
 
-        $observacao = $this->dom->createElement('OBSERVACAO', '1');
-        $identificacao->appendChild($observacao);
+        $this->dom->addChild(
+            $identificacao,
+            "OBSERVACAO",
+            $std->Observacao,
+            true,
+            "Observação do cancelamento da NFS-e"
+        );
 
         $this->xml = $this->dom->saveXML();
         
-        return $this->envelopXML($this->xml, $method);
+        return $this->xml;
     }
 
-    public function consultaLote(){
+    public function consultaLote($std){
 
         $method = '3';
 
@@ -664,18 +680,28 @@ class Make{
         $identificacao = $this->dom->createElement('IDENTIFICACAO');
         $root->appendChild($identificacao);
 
-        $inscricao = $this->dom->createElement('INSCRICAO', $this->inscricaoUser);
-        $identificacao->appendChild($inscricao);
+        $this->dom->addChild(
+            $identificacao,
+            "INSCRICAO",
+            $this->inscricaoUser,
+            true,
+            "Inscrição mobiliária do prestador da NFS-e"
+        );
 
-        $lote = $this->dom->createElement('LOTE', '1');
-        $identificacao->appendChild($lote);
+        $this->dom->addChild(
+            $identificacao,
+            "LOTE",
+            $std->NumeroLote,
+            true,
+            "Lote da NFS-e, numeros inteiros de até 9"
+        );
 
         $this->xml = $this->dom->saveXML();
 
-        return $this->envelopXML($this->xml, $method);
+        return $this->xml;
     }
 
-    public function consulta(){
+    public function consulta($std){
 
         $method = '4';
 
@@ -685,36 +711,31 @@ class Make{
         $identificacao = $this->dom->createElement('IDENTIFICACAO');
         $root->appendChild($identificacao);
 
-        $inscricao = $this->dom->createElement('INSCRICAO', $this->inscricaoUser);
-        $identificacao->appendChild($inscricao);
+        $this->dom->addChild(
+            $identificacao,
+            "INSCRICAO",
+            $this->inscricaoUser,
+            true,
+            "Inscrição mobiliária do prestador da NFS-e"
+        );
 
-        $lote = $this->dom->createElement('LOTE', '1');
-        $identificacao->appendChild($lote);
+        $this->dom->addChild(
+            $identificacao,
+            "LOTE",
+            $std->NumeroLote,
+            true,
+            "Lote da NFS-e, numeros inteiros de até 9"
+        );
 
-        $sequencia = $this->dom->createElement('SEQUENCIA', '1');
-        $identificacao->appendChild($sequencia);
+        $this->dom->addChild(
+            $identificacao,
+            "SEQUENCIA",
+            $std->Sequencia,
+            true,
+            "Sequência da NFS-e, numeros inteiros de até 9"
+        );
 
         $this->xml = $this->dom->saveXML();
-
-        return $this->envelopXML($this->xml, $method);
-    }
-
-    public function envelopXML($xml, $method){
-        
-        $xml = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
-
-        $this->xml =
-        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <nfse:Nfse.Execute>
-                    <nfse:Operacao>' . $method . '</nfse:Operacao>
-                    <nfse:Usuario>' . $this->user . '</nfse:Usuario>
-                    <nfse:Senha>' . md5($this->password) . '</nfse:Senha>
-                    <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
-                </nfse:Nfse.Execute>
-            </soapenv:Body>
-        </soapenv:Envelope>';
 
         return $this->xml;
     }

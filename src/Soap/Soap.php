@@ -2,18 +2,7 @@
 
 namespace NFePHP\NFSe\Aracatuba\Soap;
 
-use NFePHP\NFSe\Aracatuba\Make;
-
 class Soap{
-
-    public function __construct() {
-
-        $obj = new Make;
-
-        $xml = $obj->gerarNota();
-
-        $this->send($xml, $soapUrl);
-    }
 
     public function send($xml, $soapUrl){
 
@@ -32,7 +21,7 @@ class Soap{
         curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         $response = curl_exec($ch);
-        echo $response;
+
         curl_close($ch);
 
         return $response;

@@ -50,6 +50,7 @@ class Convert {
     public function toXml($txt = ''){
 
         if (!empty($txt)) {
+
             $this->txt = trim($txt);
         }
 
@@ -90,6 +91,7 @@ class Convert {
     protected function isNFSe($txt){
 
         if (empty($txt)) {
+
             throw DocumentsException::wrongDocument(15, '');
         }
 
@@ -123,7 +125,9 @@ class Convert {
         unset($array[0]);
 
         if ($numnotas == 1) {
+
             $aNotas[] = $array;
+
             return $aNotas;
         }
 
@@ -140,6 +144,7 @@ class Convert {
                 $resp[$xCount]['init'] = $iCount;
 
                 if ($xCount > 0) {
+
                     $resp[$xCount -1]['fim'] = $iCount;
                 }
 
@@ -167,6 +172,7 @@ class Convert {
      * @throws \NFePHP\NFe\Exception\DocumentsException
      */
     protected function checkQtdNFSe() {
+
         $num = count($this->notas);
 
         if ($num != $this->numNFs) {
@@ -193,6 +199,7 @@ class Convert {
     protected function loadLayouts($nota) {
         
         if (empty($nota)) {
+            
             throw DocumentsException::wrongDocument(17, '');
         }
 

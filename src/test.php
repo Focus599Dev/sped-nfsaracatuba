@@ -1,19 +1,30 @@
 <?php
-
 include 'Make.php';
 include 'Convert.php';
 include 'Soap/Soap.php';
+include 'Common/Tools.php';
+include 'Tools.php';
 include 'Exception/DocumentsException.php';
 include 'Factories/Parser.php';
 include '../../sped-common/src/DOMImproved.php';
 include '../../sped-common/src/Strings.php';
 
-// $obj = new NFePHP\NFSe\ARACATUBA\Soap\Soap();
+$txt = realpath(__DIR__ . "/../storage/TxT.txt");
 
-$url = realpath(__DIR__ . "/../storage/TxT.txt");
+$textoTeste = file_get_contents($txt);
 
-$textoTeste = file_get_contents($url);
+$obj = new NFePHP\NFSe\Aracatuba\Convert;
 
-$obj = new NFePHP\NFSe\ARACATUBA\Convert;
+$xml = $obj->toXml($textoTeste);
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$conf = [
+    "versao" => '3.0.1',
+];
 
-$obj->toXml($textoTeste);
+$conf = json_encode($conf);
+
+$xml = $xml[0];
+
+$obj = new NFePHP\NFSe\Aracatuba\Tools($conf);
+
+$xml = $obj->enviaRPS($xml);
