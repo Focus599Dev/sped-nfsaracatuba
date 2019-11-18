@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 namespace NFePHP\NFSe\Aracatuba\Soap;
 
-class Soap{
+class Soap
+{
 
-    public function send($xml, $soapUrl){
+    public function send($xml, $soapUrl)
+    {
 
         $ch = curl_init();
 

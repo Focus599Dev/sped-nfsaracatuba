@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace NFePHP\NFSe\Aracatuba;
 
@@ -7,13 +7,15 @@ use NFePHP\Common\Strings;
 use DOMDocument;
 use NFePHP\Common\DOMImproved as Dom;
 
-class Tools extends ToolsBase {
+class Tools extends ToolsBase
+{
 
     public $soapUrl = 'http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse';
 
-	public function enviaRPS($xml) {
+    public function enviaRPS($xml)
+    {
 
-		if (empty($xml)) {
+        if (empty($xml)) {
             throw new InvalidArgumentException('$xml');
         }
 
@@ -28,19 +30,20 @@ class Tools extends ToolsBase {
         $this->lastResponse = $this->removeStuffs($this->lastResponse);
 
         $this->lastResponse = htmlspecialchars_decode($this->lastResponse);
-        
+
         $this->lastResponse = substr($this->lastResponse, strpos($this->lastResponse, '<Mensagem>') + 10);
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
         $auxResp = simplexml_load_string($this->lastResponse);
-        var_dump($auxResp);
-        return (String) $auxResp->return[0];
-	}
 
-    public function cancelamento($xml) {
+        return (string) $auxResp->return[0];
+    }
 
-		if (empty($xml)) {
+    public function cancelamento($xml)
+    {
+
+        if (empty($xml)) {
             throw new InvalidArgumentException('$xml');
         }
 
@@ -55,17 +58,18 @@ class Tools extends ToolsBase {
         $this->lastResponse = $this->removeStuffs($this->lastResponse);
 
         $this->lastResponse = htmlspecialchars_decode($this->lastResponse);
-        
+
         $this->lastResponse = substr($this->lastResponse, strpos($this->lastResponse, '<Mensagem>') + 10);
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
         $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (String) $auxResp->return[0];
+        return (string) $auxResp->return[0];
     }
 
-    public function consultaLote($xml){
+    public function consultaLote($xml)
+    {
 
         if (empty($xml)) {
             throw new InvalidArgumentException('$xml');
@@ -82,17 +86,18 @@ class Tools extends ToolsBase {
         $this->lastResponse = $this->removeStuffs($this->lastResponse);
 
         $this->lastResponse = htmlspecialchars_decode($this->lastResponse);
-        
+
         $this->lastResponse = substr($this->lastResponse, strpos($this->lastResponse, '<Mensagem>') + 10);
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
         $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (String) $auxResp->return[0];
+        return (string) $auxResp->return[0];
     }
 
-    public function consulta($xml){
+    public function consulta($xml)
+    {
 
         if (empty($xml)) {
             throw new InvalidArgumentException('$xml');
@@ -109,13 +114,13 @@ class Tools extends ToolsBase {
         $this->lastResponse = $this->removeStuffs($this->lastResponse);
 
         $this->lastResponse = htmlspecialchars_decode($this->lastResponse);
-        
+
         $this->lastResponse = substr($this->lastResponse, strpos($this->lastResponse, '<Mensagem>') + 10);
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
         $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (String) $auxResp->return[0];
+        return (string) $auxResp->return[0];
     }
 }

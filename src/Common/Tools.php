@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace NFePHP\NFSe\Aracatuba\Common;
 
@@ -11,9 +11,10 @@ use SoapHeader;
 use NFePHP\Common\Validator;
 use NFePHP\NFSe\Aracatuba\Soap\Soap;
 
-class Tools {
-	
-	/**
+class Tools
+{
+
+    /**
      * config class
      * @var \stdClass
      */
@@ -53,14 +54,16 @@ class Tools {
         '3.0.1' => 'GINFEV301',
     ];
 
-    public function __construct($configJson) {
+    public function __construct($configJson)
+    {
 
         $this->config = json_decode($configJson);
 
         $this->version($this->config->versao);
     }
 
-    public function version($version = null){
+    public function version($version = null)
+    {
 
         if (null === $version) {
 
@@ -71,13 +74,14 @@ class Tools {
 
             throw new \InvalidArgumentException('Essa versão de layout não está disponível');
         }
-        
+
         $this->versao = $version;
-        
+
         return $this->versao;
     }
 
-    protected function sendRequest($request, $soapUrl){
+    protected function sendRequest($request, $soapUrl)
+    {
 
         $soap = new Soap;
 
@@ -86,12 +90,13 @@ class Tools {
         return (string) $response;
     }
 
-    public function envelopXML($xml, $method){
+    public function envelopXML($xml, $method)
+    {
 
         $xml = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
 
         $this->xml =
-        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">
+            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">
             <soapenv:Header/>
             <soapenv:Body>
                 <nfse:Nfse.Execute>
@@ -106,70 +111,71 @@ class Tools {
         return $this->xml;
     }
 
-    public function removeStuffs($xml) {
+    public function removeStuffs($xml)
+    {
 
         if (preg_match('/<soap:Body>/', $xml)) {
 
             $tag = '<soap:Body>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
+
             $tag = '</soap:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
-        
+            $xml = substr($xml, 0, strpos($xml, $tag));
+
         } else if (preg_match('/<soapenv:Body>/', $xml)) {
 
             $tag = '<soapenv:Body>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
-            $tag = '</soapenv:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
 
-        }  else if (preg_match('/<soap12:Body>/', $xml)) {
+            $tag = '</soapenv:Body>';
+            $xml = substr($xml, 0, strpos($xml, $tag));
+
+        } else if (preg_match('/<soap12:Body>/', $xml)) {
 
             $tag = '<soap12:Body>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
+
             $tag = '</soap12:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
+            $xml = substr($xml, 0, strpos($xml, $tag));
 
         } else if (preg_match('/<env:Body>/', $xml)) {
 
             $tag = '<env:Body>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
+
             $tag = '</env:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
+            $xml = substr($xml, 0, strpos($xml, $tag));
 
         } else if (preg_match('/<env:Body/', $xml)) {
 
             $tag = '<env:Body xmlns:env=\'http://www.w3.org/2003/05/soap-envelope\'>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
-            $tag = '</env:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
 
+            $tag = '</env:Body>';
+            $xml = substr($xml, 0, strpos($xml, $tag));
+            
         } else if (preg_match('/<S:Body>/', $xml)) {
 
             $tag = '<S:Body>';
-            $xml = substr( $xml, ( strpos($xml, $tag) + strlen($tag) ), strlen($xml) );
-            
+            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
+
             $tag = '</S:Body>';
-            $xml = substr( $xml, 0 , strpos($xml, $tag) );
+            $xml = substr($xml, 0, strpos($xml, $tag));
         }
 
         if (preg_match('/ns3:/', $xml)) {
 
-           $xml = preg_replace('/ns3:/', '', $xml);
+            $xml = preg_replace('/ns3:/', '', $xml);
         }
 
         if (preg_match('/ns2:/', $xml)) {
 
-           $xml = preg_replace('/ns2:/', '', $xml);
+            $xml = preg_replace('/ns2:/', '', $xml);
         }
 
         if (preg_match('/ns4:/', $xml)) {
 
-           $xml = preg_replace('/ns4:/', '', $xml);
+            $xml = preg_replace('/ns4:/', '', $xml);
         }
 
         return $xml;

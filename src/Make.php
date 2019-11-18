@@ -9,8 +9,9 @@ use RuntimeException;
 use DOMElement;
 use DateTime;
 
-class Make{
-    
+class Make
+{
+
     public $dom;
 
     public $xml;
@@ -19,16 +20,18 @@ class Make{
 
     public $versaoNFSE = '1.00';
 
-    public function __construct() {
-        
+    public function __construct()
+    {
+
         $this->dom = new Dom();
 
         $this->dom->preserveWhiteSpace = false;
 
         $this->dom->formatOutput = false;
     }
-    
-    public function getXML($std) {
+
+    public function getXML($std)
+    {
 
         if (empty($this->xml)) {
 
@@ -38,7 +41,8 @@ class Make{
         return $this->xml;
     }
 
-    public function gerarNota($std) {
+    public function gerarNota($std)
+    {
 
         $method = '1';
 
@@ -623,8 +627,9 @@ class Make{
         return $this->xml;
     }
 
-    public function cancelamento($std){
-        
+    public function cancelamento($std)
+    {
+
         $method = '2';
 
         $root = $this->dom->createElement('NFSE');
@@ -666,11 +671,12 @@ class Make{
         );
 
         $this->xml = $this->dom->saveXML();
-        
+
         return $this->xml;
     }
 
-    public function consultaLote($std){
+    public function consultaLote($std)
+    {
 
         $method = '3';
 
@@ -701,7 +707,8 @@ class Make{
         return $this->xml;
     }
 
-    public function consulta($std){
+    public function consulta($std)
+    {
 
         $method = '4';
 

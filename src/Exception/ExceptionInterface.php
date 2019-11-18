@@ -2,5 +2,5 @@
 
 namespace NFePHP\NFSe\Aracatuba\Exception;
 
-interface ExceptionInterface {
-}
+interface ExceptionInterface
+{ }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace NFePHP\NFSe\Aracatuba\Factories;
 
@@ -16,38 +16,40 @@ use NFePHP\NFSe\Aracatuba\Exception\DocumentsException;
 use stdClass;
 use NFePHP\Common\Strings;
 
-class Parser {
+class Parser
+{
 
-	/**
+    /**
      * @var array
-    */
+     */
     protected $structure;
 
     /**
      * @var Make
-    */
+     */
     protected $make;
 
     /**
      * @var stdClass
-    */
+     */
     protected $loteRps;
 
     /**
      * @var stdClass
-    */
+     */
     protected $tomador;
 
     /**
      * @var stdClass
-    */
+     */
     protected $servico;
 
     /**
      * Configure environment to correct NFSe layout
      * @param string $version
-    */
-    public function __construct($version = '3.0.1'){
+     */
+    public function __construct($version = '3.0.1')
+    {
 
         $ver = str_replace('.', '', $version);
 
@@ -65,7 +67,8 @@ class Parser {
      * @param array $nota
      * @return string|null
      */
-    public function toXml($nota) {
+    public function toXml($nota)
+    {
 
         $std = $this->array2xml($nota);
 
@@ -81,8 +84,9 @@ class Parser {
      * Converte txt array to xml
      * @param array $nota
      * @return void
-    */
-    protected function array2xml($nota){
+     */
+    protected function array2xml($nota)
+    {
 
         $obj = [];
 
@@ -100,21 +104,22 @@ class Parser {
         return $obj;
     }
 
-    protected static function fieldsToStd($dfls, $struct) {
-        
+    protected static function fieldsToStd($dfls, $struct)
+    {
+
         $sfls = explode('|', $struct);
 
-        $len = count($sfls)-1;
+        $len = count($sfls) - 1;
 
         $std = new \stdClass();
 
         for ($i = 1; $i < $len; $i++) {
-            
+
             $name = $sfls[$i];
-            
+
             if (isset($dfls[$i]))
                 $data = $dfls[$i];
-            else 
+            else
                 $data = '';
 
             if (!empty($name)) {
