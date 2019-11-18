@@ -19,6 +19,8 @@ $xml = $obj->toXml($textoTeste);
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $conf = [
     "versao" => '3.0.1',
+    "user" => '02949160000379',
+    "password" => '123456',
 ];
 
 $conf = json_encode($conf);

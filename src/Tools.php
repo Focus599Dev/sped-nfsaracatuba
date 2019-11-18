@@ -9,11 +9,7 @@ use NFePHP\Common\DOMImproved as Dom;
 
 class Tools extends ToolsBase {
 
-    public $user = '02949160000379';
-
-    public $password = '123456';
-
-    public $soapUrl = 'http://201.49.72.130:8083/issonline/servlet/anfse?wsdl';
+    public $soapUrl = 'http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse';
 
 	public function enviaRPS($xml) {
 

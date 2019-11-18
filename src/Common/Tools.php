@@ -96,8 +96,8 @@ class Tools {
             <soapenv:Body>
                 <nfse:Nfse.Execute>
                     <nfse:Operacao>' . $method . '</nfse:Operacao>
-                    <nfse:Usuario>' . $this->user . '</nfse:Usuario>
-                    <nfse:Senha>' . md5($this->password) . '</nfse:Senha>
+                    <nfse:Usuario>' . $this->config->user . '</nfse:Usuario>
+                    <nfse:Senha>' . md5($this->config->password) . '</nfse:Senha>
                     <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
                 </nfse:Nfse.Execute>
             </soapenv:Body>
