@@ -101,63 +101,42 @@ class Tools
     public function removeStuffs($xml)
     {
 
-        if (preg_match('/<soap:Body>/', $xml)) {
+        if (preg_match('/<SOAP-ENV:Body>/', $xml)) {
 
-            $tag = '<soap:Body>';
+            $tag = '<SOAP-ENV:Body>';
             $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
 
-            $tag = '</soap:Body>';
+            $tag = '</SOAP-ENV:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-        } else if (preg_match('/<soapenv:Body>/', $xml)) {
 
-            $tag = '<soapenv:Body>';
+        } elseif (preg_match('/<NFSE>/', $xml)) {
+
+            $tag = '<NFSE>';
             $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
 
-            $tag = '</soapenv:Body>';
+            $tag = '</NFSE>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-        } else if (preg_match('/<soap12:Body>/', $xml)) {
 
-            $tag = '<soap12:Body>';
-            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
-
-            $tag = '</soap12:Body>';
-            $xml = substr($xml, 0, strpos($xml, $tag));
-        } else if (preg_match('/<env:Body>/', $xml)) {
-
-            $tag = '<env:Body>';
-            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
-
-            $tag = '</env:Body>';
-            $xml = substr($xml, 0, strpos($xml, $tag));
-        } else if (preg_match('/<env:Body/', $xml)) {
-
-            $tag = '<env:Body xmlns:env=\'http://www.w3.org/2003/05/soap-envelope\'>';
-            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
-
-            $tag = '</env:Body>';
-            $xml = substr($xml, 0, strpos($xml, $tag));
-        } else if (preg_match('/<S:Body>/', $xml)) {
-
-            $tag = '<S:Body>';
-            $xml = substr($xml, (strpos($xml, $tag) + strlen($tag)), strlen($xml));
-
-            $tag = '</S:Body>';
-            $xml = substr($xml, 0, strpos($xml, $tag));
         }
 
-        if (preg_match('/ns3:/', $xml)) {
+        if (preg_match('/<Nfse.ExecuteResponse xmlns="nfse">/', $xml)) {
 
-            $xml = preg_replace('/ns3:/', '', $xml);
+            $xml = preg_replace('/<Nfse.ExecuteResponse xmlns="nfse">/', '', $xml);
         }
 
-        if (preg_match('/ns2:/', $xml)) {
+        if (preg_match('/<\/Nfse.ExecuteResponse>/', $xml)) {
 
-            $xml = preg_replace('/ns2:/', '', $xml);
+            $xml = preg_replace('/<\/Nfse.ExecuteResponse>/', '', $xml);
         }
 
-        if (preg_match('/ns4:/', $xml)) {
+        if (preg_match('/<NFSE>/', $xml)) {
 
-            $xml = preg_replace('/ns4:/', '', $xml);
+            $xml = preg_replace('/<NFSE>/', '', $xml);
+        }
+
+        if (preg_match('/<\/NFSE>/', $xml)) {
+
+            $xml = preg_replace('/<\/NFSE>/', '', $xml);
         }
 
         return $xml;

@@ -29,13 +29,9 @@ class Tools extends ToolsBase
 
         $this->lastResponse = $this->removeStuffs($this->lastResponse);
 
-        $this->lastResponse = substr($this->lastResponse, strpos($this->lastResponse, '<Mensagem>') + 10);
-
-        $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
-
         $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (string) $auxResp->return[0];
+        return $auxResp;
     }
 
     public function cancelamento($xml)
@@ -63,7 +59,7 @@ class Tools extends ToolsBase
 
         $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (string) $auxResp->return[0];
+        return $auxResp;
     }
 
     public function consultaLote($xml)
@@ -89,9 +85,9 @@ class Tools extends ToolsBase
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
-        $auxResp = simplexml_load_string($this->lastResponse, 'SimpleXMLElement', LIBXML_ERR_WARNING );
+        $auxResp = simplexml_load_string($this->lastResponse);
 
-        return (string) $auxResp->return[0];
+        return $auxResp;
     }
 
     public function consulta($xml)
@@ -118,7 +114,7 @@ class Tools extends ToolsBase
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
         $auxResp = simplexml_load_string($this->lastResponse);
-        
-        return (string) $auxResp->return[0];
+
+        return $auxResp;
     }
 }

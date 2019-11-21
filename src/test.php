@@ -31,3 +31,4 @@ $xml = $xml[0];
 $obj = new NFePHP\NFSe\Aracatuba\Tools($conf);
 
 $xml = $obj->enviaRPS($xml);
+var_dump($xml);
