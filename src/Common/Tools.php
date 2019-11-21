@@ -14,36 +14,17 @@ use NFePHP\NFSe\Aracatuba\Soap\Soap;
 class Tools
 {
 
+    public $soapUrl;
     /**
      * config class
      * @var \stdClass
      */
     public $config;
     /**
-     * ambiente
-     * @var string
-     */
-    public $ambiente = 'homologacao';
-    /**
      * Environment
      * @var int
      */
-    public $tpAmb = 2;
-    /**
-     * soap class
-     * @var SoapInterface
-     */
     public $soap;
-    /**
-     * last soap request
-     * @var string
-     */
-    public $lastRequest = '';
-    /**
-     * last soap response
-     * @var string
-     */
-    public $lastResponse = '';
     /**
      * Version of layout
      * @var string
@@ -60,6 +41,12 @@ class Tools
         $this->config = json_decode($configJson);
 
         $this->version($this->config->versao);
+
+        if ($this->config->tpAmb == '1') {
+            $this->soapUrl = 'http://201.49.72.130:8083/issonline/servlet/anfse?wsdl';
+        } else {
+            $this->soapUrl = 'http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse?wsdl';
+        }
     }
 
     public function version($version = null)
@@ -121,7 +108,6 @@ class Tools
 
             $tag = '</soap:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         } else if (preg_match('/<soapenv:Body>/', $xml)) {
 
             $tag = '<soapenv:Body>';
@@ -129,7 +115,6 @@ class Tools
 
             $tag = '</soapenv:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         } else if (preg_match('/<soap12:Body>/', $xml)) {
 
             $tag = '<soap12:Body>';
@@ -137,7 +122,6 @@ class Tools
 
             $tag = '</soap12:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         } else if (preg_match('/<env:Body>/', $xml)) {
 
             $tag = '<env:Body>';
@@ -145,7 +129,6 @@ class Tools
 
             $tag = '</env:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         } else if (preg_match('/<env:Body/', $xml)) {
 
             $tag = '<env:Body xmlns:env=\'http://www.w3.org/2003/05/soap-envelope\'>';
@@ -153,7 +136,6 @@ class Tools
 
             $tag = '</env:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-            
         } else if (preg_match('/<S:Body>/', $xml)) {
 
             $tag = '<S:Body>';

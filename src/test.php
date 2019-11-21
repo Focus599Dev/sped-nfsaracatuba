@@ -18,6 +18,7 @@ $obj = new NFePHP\NFSe\Aracatuba\Convert;
 $xml = $obj->toXml($textoTeste);
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $conf = [
+    "tpAmb" => '2',
     "versao" => '3.0.1',
     "user" => '02949160000379',
     "password" => '123456',

@@ -44,8 +44,6 @@ class Make
     public function gerarNota($std)
     {
 
-        $method = '1';
-
         $root = $this->dom->createElement('NFSE');
         $this->dom->appendChild($root);
 
@@ -546,6 +544,14 @@ class Make
 
         $this->dom->addChild(
             $servico,
+            "VALORUNIT",
+            $std->ValorUnit,
+            true,
+            "Refere-se ao valor unitário do serviço "
+        );
+
+        $this->dom->addChild(
+            $servico,
             "DESCRICAO",
             $std->Descricao,
             true,
@@ -630,8 +636,6 @@ class Make
     public function cancelamento($std)
     {
 
-        $method = '2';
-
         $root = $this->dom->createElement('NFSE');
         $this->dom->appendChild($root);
 
@@ -678,8 +682,6 @@ class Make
     public function consultaLote($std)
     {
 
-        $method = '3';
-
         $root = $this->dom->createElement('NFSE');
         $this->dom->appendChild($root);
 
@@ -709,8 +711,6 @@ class Make
 
     public function consulta($std)
     {
-
-        $method = '4';
 
         $root = $this->dom->createElement('NFSE');
         $this->dom->appendChild($root);
