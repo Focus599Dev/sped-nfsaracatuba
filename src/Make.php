@@ -3,11 +3,6 @@
 namespace NFePHP\NFSe\Aracatuba;
 
 use NFePHP\Common\DOMImproved as Dom;
-use NFePHP\Common\Strings;
-use stdClass;
-use RuntimeException;
-use DOMElement;
-use DateTime;
 
 class Make
 {
@@ -544,18 +539,18 @@ class Make
 
         $this->dom->addChild(
             $servico,
-            "VALORUNIT",
-            $std->ValorUnit,
-            true,
-            "Refere-se ao valor unitário do serviço "
-        );
-
-        $this->dom->addChild(
-            $servico,
             "DESCRICAO",
             $std->Descricao,
             true,
             "descrição do serviço da NFS-e"
+        );
+
+        $this->dom->addChild(
+            $servico,
+            "VALORUNIT",
+            $std->ValorUnit,
+            true,
+            "Refere-se ao valor unitário do serviço "
         );
 
         $this->dom->addChild(

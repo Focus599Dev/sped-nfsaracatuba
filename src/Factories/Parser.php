@@ -12,7 +12,6 @@ namespace NFePHP\NFSe\Aracatuba\Factories;
  */
 
 use NFePHP\NFSe\Aracatuba\Make;
-use NFePHP\NFSe\Aracatuba\Exception\DocumentsException;
 use stdClass;
 use NFePHP\Common\Strings;
 

@@ -4,8 +4,6 @@ namespace NFePHP\NFSe\Aracatuba;
 
 use NFePHP\NFSe\Aracatuba\Common\Tools as ToolsBase;
 use NFePHP\Common\Strings;
-use DOMDocument;
-use NFePHP\Common\DOMImproved as Dom;
 
 class Tools extends ToolsBase
 {
