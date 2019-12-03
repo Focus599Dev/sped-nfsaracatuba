@@ -7,7 +7,6 @@ use NFePHP\Common\Strings;
 
 class Tools extends ToolsBase
 {
-
     public function enviaRPS($xml)
     {
 
@@ -21,15 +20,17 @@ class Tools extends ToolsBase
 
         $request = $this->envelopXML($xml, $servico);
 
-        $this->lastResponse = $this->sendRequest($request, $this->soapUrl);
+        $this->lastRequest = htmlspecialchars_decode($request);
 
-        $this->lastResponse = htmlspecialchars_decode($this->lastResponse);
+        $request = $this->envelopSoapXML($request);
 
-        $this->lastResponse = $this->removeStuffs($this->lastResponse);
+        $auxRequest = $this->sendRequest($request, $this->soapUrl);
 
-        $auxResp = simplexml_load_string($this->lastResponse);
+        $auxRequest = htmlspecialchars_decode($auxRequest);
 
-        return $auxResp;
+        $auxRequest = $this->removeStuffs($auxRequest);
+
+        return $auxRequest;
     }
 
     public function cancelamento($xml)

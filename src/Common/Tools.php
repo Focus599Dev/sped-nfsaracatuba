@@ -76,17 +76,23 @@ class Tools
         $xml = trim(preg_replace("/<\?xml.*?\?>/", "", $xml));
 
         $this->xml =
+            '<nfse:Nfse.Execute>
+                <nfse:Operacao>' . $method . '</nfse:Operacao>
+                <nfse:Usuario>' . $this->config->user . '</nfse:Usuario>
+                <nfse:Senha>' . md5($this->config->password) . '</nfse:Senha>
+                <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
+            </nfse:Nfse.Execute>';
+
+        return $this->xml;
+    }
+
+    public function envelopSoapXML($xml)
+    {
+        $this->xml =
             '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">
             <soapenv:Header/>
-            <soapenv:Body>
-                <nfse:Nfse.Execute>
-                    <nfse:Operacao>' . $method . '</nfse:Operacao>
-                    <nfse:Usuario>' . $this->config->user . '</nfse:Usuario>
-                    <nfse:Senha>' . md5($this->config->password) . '</nfse:Senha>
-                    <nfse:Webxml>' . htmlspecialchars($xml) . '</nfse:Webxml>
-                </nfse:Nfse.Execute>
-            </soapenv:Body>
-        </soapenv:Envelope>';
+                <soapenv:Body>' . $xml . '</soapenv:Body>
+            </soapenv:Envelope>';
 
         return $this->xml;
     }
@@ -101,7 +107,6 @@ class Tools
 
             $tag = '</SOAP-ENV:Body>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         } elseif (preg_match('/<NFSE>/', $xml)) {
 
             $tag = '<NFSE>';
@@ -109,7 +114,6 @@ class Tools
 
             $tag = '</NFSE>';
             $xml = substr($xml, 0, strpos($xml, $tag));
-
         }
 
         if (preg_match('/<Nfse.ExecuteResponse xmlns="nfse">/', $xml)) {
@@ -133,5 +137,10 @@ class Tools
         }
 
         return $xml;
+    }
+
+    public function getLastRequest()
+    {
+        return $this->lastRequest;
     }
 }

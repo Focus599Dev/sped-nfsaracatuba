@@ -2,20 +2,28 @@
     "name": "sped-nfsaracatuba",
     "type": "library",
     "description": "API para comunicação com o webService de Araçatuba",
-    "keywords": ["nfs","sped","nfephp"],
+    "keywords": [
+        "nfs",
+        "sped",
+        "nfephp"
+    ],
     "homepage": "https://github.com/Focus599Dev/sped-nfsaracatuba",
-    "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],
+    "license": [
+        "LGPL-3.0-or-later",
+        "GPL-3.0-or-later",
+        "MIT"
+    ],
     "authors": [
         {
             "name": "Marlon Oliveira Barbosa",
             "email": "marlon.academi@gmail.com",
-            "homepage": "https://github.com/Focus599Dev/sped-nfse-sigiss",
+            "homepage": "https://github.com/Focus599Dev/sped-nfsaracatuba",
             "role": "Developer"
         }
     ],
     "require": {
-        "php" : ">= 7.0",
-        "nfephp-org/sped-common" : "^5.0",
+        "php": ">= 7.0",
+        "nfephp-org/sped-common": "^5.0",
         "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
@@ -27,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-          "NFePHP\\NFSe\\ARACATUBA\\": "src/"
-        } 
+            "NFePHP\\NFSe\\Aracatuba\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "NFePHP\\NFSe\\ARACATUBA\\Tests\\": "tests/"
+            "NFePHP\\NFSe\\Aracatuba\\Tests\\": "tests/"
         }
     },
     "scripts": {
