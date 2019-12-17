@@ -102,7 +102,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "SEQUENCIA",
-            $std->Sequencia,
+            $std->Serie,
             true,
             "sequência da NFS-e, até 9 caracteres"
         );
@@ -126,7 +126,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "LOCAL",
-            $std->Local,
+            $std->tomador->Local,
             true,
             "local em que o serviço foi prestado"
         );
@@ -134,7 +134,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "UFFORA",
-            $std->UfFora,
+            $std->tomador->UfFora,
             false,
             "sigla da Unidade Federativa em que o serviço foi prestado"
         );
@@ -142,7 +142,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "MUNICIPIOFORA",
-            $std->MunicipioFora,
+            $std->tomador->MunicipioFora,
             false,
             "código do município em que o serviço foi prestado"
         );
@@ -150,7 +150,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "PAISFORA",
-            $std->PaisFora,
+            $std->tomador->PaisFora,
             false,
             "país em que o serviço foi prestado"
         );
@@ -158,8 +158,8 @@ class Make
         $this->dom->addChild(
             $nota,
             "SITUACAO",
-            $std->Situacao,
-            true,
+            $std->tomador->Situacao,
+            false,
             "código da situação da NFS-e, e aceita números inteiros de até 4 caracteres"
         );
 
@@ -175,7 +175,7 @@ class Make
             $nota,
             "ATIVIDADE",
             $std->CodigoCnae,
-            true,
+            false,
             "código da atividade da NFS-e, e aceita até 10 caracteres alfanuméricos"
         );
 
@@ -222,7 +222,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "CPFCNPJ",
-            $std->CpfCnpj,
+            $std->tomador->Cnpj,
             true,
             "CPF ou CNPJ do tomador da NFS-e, e aceita até 20 caracteres alfanuméricos"
         );
@@ -230,7 +230,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "RGIE",
-            $std->RgIe,
+            $std->tomador->RgIe,
             false,
             "RG ou IE do tomador da NFS-e, e aceita até 15 caracteres"
         );
@@ -238,7 +238,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "NOMERAZAO",
-            $std->RazaoSocial,
+            $std->tomador->RazaoSocial,
             true,
             "Razão social do tomador da NFS-e"
         );
@@ -246,15 +246,15 @@ class Make
         $this->dom->addChild(
             $nota,
             "NOMEFANTASIA",
-            $std->NomeFantasia,
-            true,
+            $std->tomador->NomeFantasia,
+            false,
             "nome fantasia do tomador da NFS-e"
         );
 
         $this->dom->addChild(
             $nota,
             "MUNICIPIO",
-            $std->CodigoMunicipio,
+            $std->tomador->CodigoMunicipio,
             true,
             "código do município da empresa do tomador"
         );
@@ -262,7 +262,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "BAIRRO",
-            $std->Bairro,
+            $std->tomador->Bairro,
             true,
             "descrição do bairro do tomador"
         );
@@ -270,7 +270,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "CEP",
-            $std->Cep,
+            $std->tomador->Cep,
             true,
             "CEP  da  empresa  do  tomador"
         );
@@ -278,15 +278,15 @@ class Make
         $this->dom->addChild(
             $nota,
             "PREFIXO",
-            $std->Prefixo,
-            true,
+            $std->tomador->Prefixo,
+            false,
             "descrição resumida do prefixo do logradouro do tomador"
         );
 
         $this->dom->addChild(
             $nota,
             "LOGRADOURO",
-            $std->Logradouro,
+            $std->tomador->Endereco,
             true,
             "descrição do logradouro do tomador da NFS-e"
         );
@@ -294,15 +294,15 @@ class Make
         $this->dom->addChild(
             $nota,
             "COMPLEMENTO",
-            $std->Complemento,
-            true,
+            $std->tomador->Complemento,
+            false,
             "complemento  do  endereço"
         );
 
         $this->dom->addChild(
             $nota,
             "NUMERO",
-            $std->Numero,
+            $std->tomador->Numero,
             true,
             "número da empresa do tomador"
         );
@@ -310,7 +310,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "EMAIL",
-            $std->Email,
+            $std->tomador->Email,
             true,
             "email da empresa do tomador"
         );
@@ -318,7 +318,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "DENTROPAIS",
-            $std->DentroPais,
+            $std->tomador->DentroPais,
             false,
             "indica se o tomador é de dentro"
         );
@@ -430,7 +430,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "ICMS",
-            $std->Icms,
+            $std->ValorIcms,
             true,
             "valor do Imposto sobre Circulação de Mercadorias e Serviços(ICMS)"
         );
@@ -446,7 +446,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "IPI",
-            $std->Ipi,
+            $std->ValorIpi,
             true,
             "valor do Imposto Sobre Produtos Industrializados(IPI)"
         );
@@ -462,7 +462,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "IOF",
-            $std->Iof,
+            $std->ValorIof,
             true,
             "valor do Imposto sobre operações financeiras(IOF)"
         );
@@ -478,7 +478,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "CIDE",
-            $std->Cide,
+            $std->ValorCide,
             true,
             "valor das Contribuições de Intervenção no Domínio Econômico(CIDE)"
         );
@@ -494,7 +494,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "OUTROSTRIBUTOS",
-            $std->OutrosTributos,
+            $std->ValorOutrosTributos,
             true,
             "valor de Outros Tributos"
         );
@@ -510,7 +510,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "OUTRASRETENCOES",
-            $std->OutrasRetencoes,
+            $std->ValorOutrasRetencoes,
             true,
             "valor de Outros Impostos"
         );
@@ -527,7 +527,7 @@ class Make
             $nota,
             "OBRA",
             $std->Obra,
-            true,
+            false,
             "código da obra"
         );
 
@@ -540,7 +540,7 @@ class Make
         $this->dom->addChild(
             $servico,
             "DESCRICAO",
-            $std->Descricao,
+            $std->Discriminacao,
             true,
             "descrição do serviço da NFS-e"
         );
@@ -587,7 +587,7 @@ class Make
             $material,
             "MATDESCRICAO",
             $std->MatDescricao,
-            true,
+            false,
             "descrição do material"
         );
 
@@ -595,7 +595,7 @@ class Make
             $material,
             "MATVALORUNIT",
             $std->MatValorUnit,
-            true,
+            false,
             "valor unitário do material"
         );
 
@@ -603,7 +603,7 @@ class Make
             $material,
             "MATQUANTIDADE",
             $std->MatQuantidade,
-            true,
+            false,
             "quantidade do material"
         );
 
@@ -611,7 +611,7 @@ class Make
             $material,
             "MATNOTA",
             $std->MatNota,
-            true,
+            false,
             "número da nota do fornecedor do material"
         );
 
@@ -619,7 +619,7 @@ class Make
             $material,
             "MATCPFCNPJ",
             $std->MatCpfCnpj,
-            true,
+            false,
             "CPF/CNPJ do fornecedor do material"
         );
 

@@ -14,6 +14,7 @@ namespace NFePHP\NFSe\Aracatuba\Factories;
 use NFePHP\NFSe\Aracatuba\Make;
 use stdClass;
 use NFePHP\Common\Strings;
+use App\Http\Model\Uteis;
 
 class Parser
 {
@@ -43,6 +44,8 @@ class Parser
      */
     protected $servico;
 
+    protected $std;
+
     /**
      * Configure environment to correct NFSe layout
      * @param string $version
@@ -53,6 +56,12 @@ class Parser
         $ver = str_replace('.', '', $version);
 
         $path = realpath(__DIR__ . "/../../storage/txtstructure$ver.json");
+
+        $this->std = new \stdClass();
+
+        $this->std->tomador = new \stdClass();
+
+        $this->std->prestador = new \stdClass();
 
         $this->structure = json_decode(file_get_contents($path), true);
 
@@ -71,9 +80,11 @@ class Parser
 
         $std = $this->array2xml($nota);
 
-        if ($this->make->getXML($std)) {
+        $this->fixFields();
 
-            return $this->make->getXML($std);
+        if ($this->make->getXML($this->std)) {
+
+            return $this->make->getXML($this->std);
         }
 
         return null;
@@ -103,14 +114,12 @@ class Parser
         return $obj;
     }
 
-    protected static function fieldsToStd($dfls, $struct)
+    protected function fieldsToStd($dfls, $struct)
     {
 
         $sfls = explode('|', $struct);
 
         $len = count($sfls) - 1;
-
-        $std = new \stdClass();
 
         for ($i = 1; $i < $len; $i++) {
 
@@ -123,10 +132,69 @@ class Parser
 
             if (!empty($name)) {
 
-                $std->$name = Strings::replaceSpecialsChars($data);
+                if ($dfls[0] == 'C') {
+
+                    $this->std->prestador->$name = Strings::replaceSpecialsChars($data);
+                } elseif ($dfls[0] == 'E' || $dfls[0] == 'E02') {
+
+                    $this->std->tomador->$name = Strings::replaceSpecialsChars($data);
+                } else {
+
+                    $this->std->$name = Strings::replaceSpecialsChars($data);
+                }
             }
         }
 
-        return $std;
+        return $this->std;
+    }
+
+    protected function fixFields()
+    {
+
+        $impostos = ['Pis', 'Cofins', 'Inss', 'Ir', 'Csll', 'Icms', 'Ipi', 'Iof', 'Cide', 'OutrosTributos', 'OutrasRetencoes'];
+
+        $aux = explode('T', $this->std->DataEmissao);
+
+        $aux[0] = trim(Uteis::convertDateMysqltoBR($aux[0]));
+
+        $this->std->DataEmissao = $aux[0];
+        $this->std->HoraEmissao = $aux[1];
+
+        if ($this->std->IssRetido == '1') {
+
+            $this->std->IssRetido = 'S';
+        } else {
+
+            $this->std->IssRetido = 'N';
+            $this->std->ValorIssRetido = '0.00';
+        }
+
+        foreach ($impostos as $value) {
+
+            $this->std->{'Ret' . $value} = $this->retImpostos($this->std->{'Valor' . $value});
+
+            $this->std->{'Valor' . $value} = $this->valorImpostos($this->std->{'Ret' . $value});
+        }
+    }
+
+    protected function retImpostos($imposto)
+    {
+
+        if ($imposto) {
+
+            return $ret = 'S';
+        } else {
+
+            return $ret = 'N';
+        }
+    }
+
+    protected function valorImpostos($imposto)
+    {
+
+        if ($imposto = 'N') {
+
+            return $ret = '0.00';
+        }
     }
 }
