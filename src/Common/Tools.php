@@ -136,6 +136,13 @@ class Tools
             $xml = preg_replace('/<\/NFSE>/', '', $xml);
         }
 
+        $xml = trim($xml);
+        
+        if (preg_match('/<Mensagem><\?xml version="1.0" encoding="ISO-8859-1"\?>/', $xml)) {
+
+            $xml = preg_replace('/<Mensagem><\?xml version="1.0" encoding="ISO-8859-1"\?>/', '<Mensagem>', $xml);
+        }
+
         return $xml;
     }
 

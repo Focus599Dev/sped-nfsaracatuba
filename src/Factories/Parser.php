@@ -175,6 +175,8 @@ class Parser
 
             $this->std->{'Valor' . $value} = $this->valorImpostos($this->std->{'Ret' . $value});
         }
+
+        $this->std->RPSNum = '0000-00' . substr($this->std->RPSNum, 0, 2) . '-' . substr($this->std->RPSNum, -4);
     }
 
     protected function retImpostos($imposto)

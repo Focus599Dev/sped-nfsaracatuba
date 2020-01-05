@@ -158,7 +158,8 @@ class Make
         $this->dom->addChild(
             $nota,
             "SITUACAO",
-            $std->tomador->Situacao,
+            // $std->tomador->Situacao,
+            '1',
             false,
             "código da situação da NFS-e, e aceita números inteiros de até 4 caracteres"
         );
@@ -648,7 +649,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "LOTE",
-            $std->NumeroLote,
+            $std->Numero,
             true,
             "Lote da NFS-e, numeros inteiros de até 9"
         );
@@ -656,7 +657,8 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "SEQUENCIA",
-            $std->Sequencia,
+            '1',
+            // $std->sequencia,
             true,
             "Sequência da NFS-e, numeros inteiros de até 9"
         );
@@ -664,7 +666,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "OBSERVACAO",
-            $std->Observacao,
+            $std->observacao,
             true,
             "Observação do cancelamento da NFS-e"
         );
@@ -694,7 +696,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "LOTE",
-            $std->NumeroLote,
+            $std->nfml_numero_lote,
             true,
             "Lote da NFS-e, numeros inteiros de até 9"
         );
