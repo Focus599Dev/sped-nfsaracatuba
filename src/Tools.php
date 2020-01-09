@@ -78,7 +78,7 @@ class Tools extends ToolsBase
         $request = $this->envelopXML($xml, $servico);
 
         $request = $this->envelopSoapXML($request);
-        var_dump('ae');
+
         $this->lastResponse = $this->sendRequest($request, $this->soapUrl);
 
         $this->lastResponse = htmlspecialchars_decode($this->lastResponse);

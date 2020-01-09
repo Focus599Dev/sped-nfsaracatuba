@@ -20,7 +20,6 @@ class Soap
         curl_setopt($ch, CURLOPT_TIMEOUT, 40);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         $response = curl_exec($ch);
 
