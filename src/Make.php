@@ -102,7 +102,8 @@ class Make
         $this->dom->addChild(
             $nota,
             "SEQUENCIA",
-            $std->Serie,
+            '1',
+            // $std->sequencia,
             true,
             "sequência da NFS-e, até 9 caracteres"
         );
