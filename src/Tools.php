@@ -59,7 +59,7 @@ class Tools extends ToolsBase
 
         $this->lastResponse = substr($this->lastResponse, 0, strpos($this->lastResponse, '</Mensagem>'));
 
-        $auxResp = simplexml_load_string($this->lastResponse);
+        $auxResp = $this->lastResponse;
 
         return $auxResp;
     }

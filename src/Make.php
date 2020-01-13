@@ -650,7 +650,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "LOTE",
-            $std->Numero,
+            $std->sequencia,
             true,
             "Lote da NFS-e, numeros inteiros de até 9"
         );
