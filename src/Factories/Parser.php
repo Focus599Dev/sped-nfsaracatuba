@@ -39,11 +39,6 @@ class Parser
      */
     protected $tomador;
 
-    /**
-     * @var stdClass
-     */
-    protected $servico;
-
     protected $std;
 
     /**
@@ -62,6 +57,10 @@ class Parser
         $this->std->tomador = new \stdClass();
 
         $this->std->prestador = new \stdClass();
+
+        $this->std->servico = array();
+
+        $this->servicos = array();
 
         $this->structure = json_decode(file_get_contents($path), true);
 
@@ -143,6 +142,13 @@ class Parser
                     $this->std->$name = Strings::replaceSpecialsChars($data);
                 }
             }
+        }
+
+        if ($dfls[0] == 'N') {
+
+            $this->servicos[] = $dfls;
+
+            $this->std->servico = $this->servicos;
         }
 
         return $this->std;

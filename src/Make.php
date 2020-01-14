@@ -536,48 +536,51 @@ class Make
         $servicos = $this->dom->createElement('SERVICOS');
         $nota->appendChild($servicos);
 
-        $servico = $this->dom->createElement('SERVICO');
-        $servicos->appendChild($servico);
+        foreach ($std->servico as $key) {
 
-        $this->dom->addChild(
-            $servico,
-            "DESCRICAO",
-            $std->Discriminacao,
-            true,
-            "descrição do serviço da NFS-e"
-        );
+            $servico = $this->dom->createElement('SERVICO');
+            $servicos->appendChild($servico);
 
-        $this->dom->addChild(
-            $servico,
-            "VALORUNIT",
-            $std->ValorUnit,
-            true,
-            "Refere-se ao valor unitário do serviço "
-        );
+            $this->dom->addChild(
+                $servico,
+                "DESCRICAO",
+                $key[4],
+                true,
+                "descrição do serviço da NFS-e"
+            );
 
-        $this->dom->addChild(
-            $servico,
-            "QUANTIDADE",
-            $std->Quantidade,
-            true,
-            "quantidade do serviço"
-        );
+            $this->dom->addChild(
+                $servico,
+                "VALORUNIT",
+                $key[12],
+                true,
+                "Refere-se ao valor unitário do serviço "
+            );
 
-        $this->dom->addChild(
-            $servico,
-            "DESCONTO",
-            $std->Desconto,
-            true,
-            "valor do desconto de um serviço"
-        );
+            $this->dom->addChild(
+                $servico,
+                "QUANTIDADE",
+                $key[13],
+                true,
+                "quantidade do serviço"
+            );
 
-        $this->dom->addChild(
-            $servico,
-            "ALIQUOTATRIBUTOS",
-            $std->AliquotaAtributos,
-            false,
-            "alíquota do tributo aproximado do serviço"
-        );
+            $this->dom->addChild(
+                $servico,
+                "DESCONTO",
+                $key[14],
+                true,
+                "valor do desconto de um serviço"
+            );
+
+            $this->dom->addChild(
+                $servico,
+                "ALIQUOTATRIBUTOS",
+                $std->AliquotaAtributos,
+                false,
+                "alíquota do tributo aproximado do serviço"
+            );
+        }
 
         $materiais = $this->dom->createElement('MATERIAIS');
         $nota->appendChild($materiais);
