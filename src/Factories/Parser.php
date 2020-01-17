@@ -179,7 +179,10 @@ class Parser
 
             $this->std->{'Ret' . $value} = $this->retImpostos($this->std->{'Valor' . $value});
 
-            $this->std->{'Valor' . $value} = $this->valorImpostos($this->std->{'Ret' . $value});
+            if ($this->std->{'Ret' . $value} == 'N') {
+
+                $this->std->{'Valor' . $value} = '0.00';
+            }
         }
 
         $this->std->RPSNum = '0000-00' . substr($this->std->RPSNum, 0, 2) . '-' . substr($this->std->RPSNum, -4);
@@ -194,15 +197,6 @@ class Parser
         } else {
 
             return $ret = 'N';
-        }
-    }
-
-    protected function valorImpostos($imposto)
-    {
-
-        if ($imposto = 'N') {
-
-            return $ret = '0.00';
         }
     }
 }
