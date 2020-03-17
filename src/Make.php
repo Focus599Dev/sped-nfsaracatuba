@@ -11,8 +11,6 @@ class Make
 
     public $xml;
 
-    public $inscricaoUser = '50778';
-
     public $versaoNFSE = '1.00';
 
     public function __construct()
@@ -64,7 +62,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "INSCRICAO",
-            $this->inscricaoUser,
+            $std->prestador->InscricaoMunicipal,
             true,
             "Inscrição mobiliária do prestador da NFS-e"
         );
