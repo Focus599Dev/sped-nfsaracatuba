@@ -678,9 +678,8 @@ class Make
         return $this->xml;
     }
 
-    public function consultaLote($std)
+    public function consultaLote($inscricaoMunicipal, $lote)
     {
-
         $root = $this->dom->createElement('NFSE');
         $this->dom->appendChild($root);
 
@@ -690,7 +689,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "INSCRICAO",
-            $this->inscricaoUser,
+            $inscricaoMunicipal,
             true,
             "Inscrição mobiliária do prestador da NFS-e"
         );
@@ -698,7 +697,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "LOTE",
-            $std->nfml_numero_lote,
+            $lote,
             true,
             "Lote da NFS-e, numeros inteiros de até 9"
         );
@@ -708,41 +707,41 @@ class Make
         return $this->xml;
     }
 
-    public function consulta($std)
-    {
+    // public function consulta($std)
+    // {
 
-        $root = $this->dom->createElement('NFSE');
-        $this->dom->appendChild($root);
+    //     $root = $this->dom->createElement('NFSE');
+    //     $this->dom->appendChild($root);
 
-        $identificacao = $this->dom->createElement('IDENTIFICACAO');
-        $root->appendChild($identificacao);
+    //     $identificacao = $this->dom->createElement('IDENTIFICACAO');
+    //     $root->appendChild($identificacao);
+    //     var_dump($std);
+    //     $this->dom->addChild(
+    //         $identificacao,
+    //         "INSCRICAO",
+    //         $this->inscricaoUser,
+    //         true,
+    //         "Inscrição mobiliária do prestador da NFS-e"
+    //     );
 
-        $this->dom->addChild(
-            $identificacao,
-            "INSCRICAO",
-            $this->inscricaoUser,
-            true,
-            "Inscrição mobiliária do prestador da NFS-e"
-        );
+    //     $this->dom->addChild(
+    //         $identificacao,
+    //         "LOTE",
+    //         $std->NumeroLote,
+    //         true,
+    //         "Lote da NFS-e, numeros inteiros de até 9"
+    //     );
 
-        $this->dom->addChild(
-            $identificacao,
-            "LOTE",
-            $std->NumeroLote,
-            true,
-            "Lote da NFS-e, numeros inteiros de até 9"
-        );
+    //     $this->dom->addChild(
+    //         $identificacao,
+    //         "SEQUENCIA",
+    //         $std->Sequencia,
+    //         true,
+    //         "Sequência da NFS-e, numeros inteiros de até 9"
+    //     );
 
-        $this->dom->addChild(
-            $identificacao,
-            "SEQUENCIA",
-            $std->Sequencia,
-            true,
-            "Sequência da NFS-e, numeros inteiros de até 9"
-        );
+    //     $this->xml = $this->dom->saveXML();
 
-        $this->xml = $this->dom->saveXML();
-
-        return $this->xml;
-    }
+    //     return $this->xml;
+    // }
 }
