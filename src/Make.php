@@ -647,7 +647,7 @@ class Make
         $this->dom->addChild(
             $identificacao,
             "INSCRICAO",
-            $this->InscricaoMunicipal,
+            $std->InscricaoMunicipal,
             true,
             "Inscrição mobiliária do prestador da NFS-e"
         );
