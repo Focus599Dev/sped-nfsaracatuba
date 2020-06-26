@@ -24,9 +24,9 @@ class Tools extends ToolsBase
         $this->lastRequest = htmlspecialchars_decode($request);
 
         $request = $this->envelopSoapXML($request);
-        echo $request;
+
         $auxRequest = $this->sendRequest($request, $this->soapUrl);
-        echo $auxRequest;
+
         $auxRequest = htmlspecialchars_decode($auxRequest);
 
         $auxRequest = $this->removeStuffs($auxRequest);
