@@ -125,7 +125,7 @@ class Make
         $this->dom->addChild(
             $nota,
             "LOCAL",
-            $std->CodigoMunicipio,
+            $std->tomador->Local,
             true,
             "local em que o serviço foi prestado"
         );
