@@ -578,7 +578,7 @@ class Make
             $this->dom->addChild(
                 $servico,
                 "ALIQUOTATRIBUTOS",
-                $std->Aliquota,
+                $std->AliquotaAtributos,
                 false,
                 "alíquota do tributo aproximado do serviço"
             );
