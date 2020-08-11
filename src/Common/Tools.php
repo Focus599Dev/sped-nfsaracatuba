@@ -27,6 +27,8 @@ class Tools
     protected $availableVersions = [
         '3.0.1' => 'GINFEV301',
     ];
+    
+    private $cnpj = '';
 
     public function __construct($configJson)
     {
@@ -40,6 +42,8 @@ class Tools
         } else {
             $this->soapUrl = 'http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse?wsdl';
         }
+        
+        $this->cnpj =  $this->config->cnpj;
     }
 
     public function version($version = null)
@@ -65,7 +69,7 @@ class Tools
 
         $soap = new Soap;
 
-        $response = $soap->send($request, $soapUrl);
+        $response = $soap->send($request, $soapUrl, $this->cnpj);
 
         return (string) $response;
     }
