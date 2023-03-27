@@ -38,7 +38,7 @@ class Tools
         $this->version($this->config->versao);
 
         if ($this->config->tpAmb == '1') {
-            $this->soapUrl = 'http://201.49.72.130:8083/issonline/servlet/anfse?wsdl';
+            $this->soapUrl = 'https://s76.asp.srv.br/issonline/servlet/anfse?wsdl';
         } else {
             $this->soapUrl = 'http://s1.asp.srv.br:8180/issonline-homolog/servlet/anfse?wsdl';
         }
